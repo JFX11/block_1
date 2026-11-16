@@ -1,0 +1,24 @@
+def filter_str(word):
+    new_word = ""
+    for letter in word:
+        if "а" <= letter <= "я":
+            new_word += letter
+        else:
+            continue
+
+    return new_word
+
+
+def count_word(string):
+    dict_words = {}
+    print(string.lower().split())
+    for i, word in enumerate(string.lower().split()):
+        if filter_str(word) in dict_words:
+            dict_words[filter_str(word)] += 1
+        else:
+            dict_words[filter_str(word)] = 1
+
+    return dict_words
+
+
+print(count_word("   привет           мир   "))
