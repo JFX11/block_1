@@ -9,6 +9,7 @@ def count_word(string):
     dict_words = {}
     for word in string.lower().split():
         filtered_word = filter_str(word)
+
         if filtered_word is not None:
             if dict_words.get(filtered_word):
                 dict_words[filtered_word] += 1
@@ -16,6 +17,7 @@ def count_word(string):
                 dict_words[filtered_word] = 1
         else:
             continue
+
     return dict_words
 
 
