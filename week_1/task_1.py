@@ -1,16 +1,18 @@
 def sum_numbers(list_numbers):
-    if isinstance(list_numbers, list) and len(list_numbers) != 0:
-        sum_positive_numbers = 0
-        for i in list_numbers:
-            if i % 2 == 0:
-                sum_positive_numbers += i
-    elif isinstance(list_numbers, list) and len(list_numbers) == 0:
-        raise ValueError("Список пуст.")
-    else:
-        raise TypeError("Передаваемый объект не является списком.")
+    sum_even_numbers = 0
+    if len(list_numbers) != 0:
+        if isinstance(list_numbers, list):
+            for num in list_numbers:
+                if isinstance(num, (int, float)) and num % 2 == 0:
+                    sum_even_numbers += int(num)
+        elif isinstance(list_numbers, list) and len(list_numbers) == 0:
+            raise ValueError("Список пуст.")
+        else:
+            raise TypeError("Передаваемый объект не является списком.")
 
-    return sum_positive_numbers
+    return sum_even_numbers
 
+print(sum_numbers([2, 2.0, 1, 'дав']))
 
 """
 Изменил имена переменных на понятные. Убрал использование генераторов списков 
