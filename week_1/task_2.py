@@ -1,43 +1,36 @@
 import string
-def filter_str(word):
-    if isinstance(word, str) and word.isalpha():
-        return word
-    elif isinstance(word, str) and word[0:-1].isalpha():
-        return word[0:-1]
 
 
-def count_word(string):
+def count_word(text):
     dict_words = {}
-    for word in string.lower().split():
-        filtered_word = filter_str(word)
+    for word in text.lower().split():
+        filtered_word = word.strip(string.punctuation + string.octdigits)
 
-        if filtered_word is not None:
+        if len(filtered_word) > 1:
             if dict_words.get(filtered_word):
                 dict_words[filtered_word] += 1
             else:
                 dict_words[filtered_word] = 1
-        else:
-            continue
 
     return dict_words
 
 
-#print(count_word(""))  # использовать str.format() -0 почитать про нее, и 
-print(string.punctuation)
-filter_str1 = string.punctuation + string.octdigits
-#print(s.strip(filter_str1))
+print(count_word("python3"))  # использовать str.format() -0 почитать про нее, и
+
 
 "ТЗ: Функция принимает строку текста и возвращает словарь: слово → сколько раз встретилось."
 
-'''
-Я решил на это раз, пределать обе функции, в count_word мы всё же создаем список из текста с помощью split()
-Затем создаем новую переменную к которой присваиваем результат функции filter_str(). Данная функция
-Берет слово и проверяет действительно ли это слово. Я посчитал, евсли мы передаем текст, то в основном
-последний элемент может быть знаком препинания или другим. Поэтому дополнительно сравнивал срезом [0:-1]
-Создавал возвращал новое слово, если последний элемент не буква.
-Затем с помощью метода get сначала проверял принадлежность слова в словаре, если True, тогда увеличивал счетчик слов,
-если нет, тогда тогда добавлял в словарь новое слово с значением 1
-'''
+"""
+Узнал что есть string.punctuation и string.octdigits, так-же убрал доплнительную
+функцию и добавил метод строк strip(), теперь слово будет фильтроваться и удалять
+знаки вначале и в конце, дополнительно указал, если длина слова больше 1 символа
+тогда это слово, т.к меньше, это уже буква.
+"""
+
+"""
+Тест-кейсы
+
+"""
 
 
 """
