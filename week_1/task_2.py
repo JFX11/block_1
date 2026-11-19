@@ -1,3 +1,4 @@
+import string
 def filter_str(word):
     if isinstance(word, str) and word.isalpha():
         return word
@@ -21,8 +22,10 @@ def count_word(string):
     return dict_words
 
 
-print(count_word(""))
-
+#print(count_word(""))  # использовать str.format() -0 почитать про нее, и 
+print(string.punctuation)
+filter_str1 = string.punctuation + string.octdigits
+#print(s.strip(filter_str1))
 
 "ТЗ: Функция принимает строку текста и возвращает словарь: слово → сколько раз встретилось."
 
