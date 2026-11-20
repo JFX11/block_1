@@ -10,15 +10,12 @@ def count_word(text):
         dict_words = {}
         for word in text.lower().split():
             filtered_word = word.strip(string.punctuation)
-            if dict_words.get(filtered_word):
-                dict_words[filtered_word] += 1
-            else:
-                dict_words[filtered_word] = 1
+            dict_words[filtered_word] = dict_words.get(filtered_word, 0) + 1  # На этой строке, пришлось посмотреть, как исп. get
 
     return dict_words
 
 
-print(count_word("python3"))
+print(count_word(1))
 
 
 "ТЗ: Функция принимает строку текста и возвращает словарь: слово → сколько раз встретилось."
