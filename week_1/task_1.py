@@ -11,9 +11,6 @@ def sum_numbers(list_numbers):
         
     return sum_even_numbers
 
-print(sum_numbers([True, False, 2]))
-print(int(True))
-
 """
 Новые правки:
 1. Убрал блок else, т.к если происходит исключение, происходит выход из функции, переменную
