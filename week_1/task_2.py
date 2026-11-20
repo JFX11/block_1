@@ -4,19 +4,20 @@ import string
 def count_word(text):
     if not isinstance(text, str):
         raise TypeError('Аргумент не является строкой')
-    elif len(text) <= 1:
+    if not text:
         raise ValueError("Пустая строка")
-    else:
-        dict_words = {}
-        for word in text.lower().split():
-            filtered_word = word.strip(string.punctuation)
-            dict_words[filtered_word] = dict_words.get(filtered_word, 0) + 1  # На этой строке, пришлось посмотреть, как исп. get
+
+    dict_words = {}
+    for word in text.lower().split():
+        filtered_word = word.strip(string.punctuation)
+        if len(filtered_word) >= 2:
+            dict_words[filtered_word] = dict_words.get(filtered_word, 0) + 1
 
     return dict_words
 
 
-print(count_word(1))
-
+print(count_word(' '))
+print("я я".split())
 
 "ТЗ: Функция принимает строку текста и возвращает словарь: слово → сколько раз встретилось."
 
