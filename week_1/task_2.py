@@ -2,11 +2,14 @@ import string
 
 
 def count_word(text):
-    dict_words = {}
-    for word in text.lower().split():
-        filtered_word = word.strip(string.punctuation + string.octdigits)
-
-        if len(filtered_word) > 1:
+    if not isinstance(text, str):
+        raise TypeError('Аргумент не является строкой')
+    elif len(text) <= 1:
+        raise ValueError("Пустая строка")
+    else:
+        dict_words = {}
+        for word in text.lower().split():
+            filtered_word = word.strip(string.punctuation)
             if dict_words.get(filtered_word):
                 dict_words[filtered_word] += 1
             else:
@@ -15,13 +18,13 @@ def count_word(text):
     return dict_words
 
 
-print(count_word("python3"))  # использовать str.format() -0 почитать про нее, и
+print(count_word("python3"))
 
 
 "ТЗ: Функция принимает строку текста и возвращает словарь: слово → сколько раз встретилось."
 
 """
-Узнал что есть string.punctuation и string.octdigits, так-же убрал доплнительную
+Узнал что есть string.punctuation, так-же убрал доплнительную
 функцию и добавил метод строк strip(), теперь слово будет фильтроваться и удалять
 знаки вначале и в конце, дополнительно указал, если длина слова больше 1 символа
 тогда это слово, т.к меньше, это уже буква.
@@ -29,6 +32,9 @@ print(count_word("python3"))  # использовать str.format() -0 поч�
 
 """
 Тест-кейсы
+count_word("python3") -  # {'python3': 1}
+count_word("Привет, как дела?")   # {'привет': 1, 'как': 1, 'дела': 1}
+count_word("(мир), 'кот' конец...")   # {'мир': 1, 'кот': 1, 'конец': 1}
 
 """
 
@@ -43,5 +49,5 @@ dict.get(обязательный аргумент(ключ), опциональ
 
 """
 """
-Слово - это объект, который содержит в себе только буквы.
+Слово - это строка, которая должна содержать минимум 2 буквы, может иметь числа, тире внутри
 """
