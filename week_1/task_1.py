@@ -6,12 +6,12 @@ def sum_numbers(list_numbers):
     
     sum_even_numbers = 0
     for num in list_numbers:
-        if type(num) == int or type(num) == float and num % 2 == 0:
+        if (type(num) == int or type(num) == float) and num % 2 == 0:
             sum_even_numbers += int(num)
         
     return sum_even_numbers
 
-print(sum_numbers([False, 4.0]))
+print(sum_numbers([True, False, 2]))
 
 """
 Новые правки:
@@ -30,7 +30,11 @@ sum_numbers([2, 2, 2]) - 6
 sum_numbers([2, 1, -2, 5, 6]) - 6 
 sum_numbers([]) -  ValueError: Список пуст.
 sum_numbers([2.5, 2.7, 1.1, 2.8, 2]) - 2
-sum_numbers([2, '4', 2])
-sum_numbers([None, 2])
+sum_numbers([2, '4', 2]) - 4
+sum_numbers([None, 2]) - 2
 sum_numbers([True, False, 2]) - 2
+
+
+Заметил что не объеденил проверку типов int и float. Поэтому проходили нечетные числа
+Прогнал все кейсы, результат корректный
 """
