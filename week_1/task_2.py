@@ -4,19 +4,19 @@ import string
 def count_word(text):
     if not isinstance(text, str):
         raise TypeError("Аргумент не является строкой")
-    if not text or len(text.split()) == 0:
+    if not text.strip():
         raise ValueError("Пустая строка")
 
     dict_words = {}
     for word in text.lower().split():
-        filtered_word = word.strip(string.punctuation + "«" + "»")
+        filtered_word = word.strip(string.punctuation + '«»—–…“”‘’№')
         if filtered_word:
             dict_words[filtered_word] = dict_words.get(filtered_word, 0) + 1
 
     return dict_words
 
 
-print(count_word("123"))
+print(count_word("кот… собака"))
 
 
 """
@@ -36,9 +36,15 @@ print(count_word("123"))
 Так-же сделал проверку if filtered_word, чтобы проверять что слово не пустое(исключаем '')
 
 dict_words[filtered_word] = dict_words.get(filtered_word, 0) + 1 - это работает так:
-Если ключ есть, тогда происходит добавление 1, если нет, то get вернет 0 и счетчик не
-изменится
+Мы обращаемся к ключу словаря, если он есть, то береться его значение + 1 и так получается счетчик
+Если значения нет, тогда dict_words.get(filtered_word, 0) дает ноль, создается новый ключ и присваивается 1(т.к у нас написано "+ 1")
 
+Ответы на доп вопросы:
+1. Я переделал проверку на if not text.strip(), теперь если даже в строке есть только пробелы, то они удаляться и будет сравниваться, путая строка или нет
+
+2. С заменой на if not text.strip(), теперь split() используется только если нет исключений
+
+3. 
 """
 
 "ТЗ: Функция принимает строку текста и возвращает словарь: слово → сколько раз встретилось."
@@ -51,7 +57,8 @@ count_word("Привет, как дела?")   # {'привет': 1, 'как': 1
 count_word("(мир), 'кот' конец...")   # {'мир': 1, 'кот': 1, 'конец': 1}
 count_word("«привет» привет") - {'привет': 2}
 count_word("") - ValueError
-count_word("а") - {'a': 1}
+count_word("а") - {'а': 1}
+count_word("а a") - {'а': 1, 'a': 1} - т.к одна буква русская, а другая английская
 count_word("аб") - {'аб': 1}
 count_word("Привет, привет!!") - {'привет': 2}
 count_word("по-русски") - {'по-русски': 1}
