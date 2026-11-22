@@ -1,34 +1,43 @@
 def read_file(name_file):
 
-    number_string = 0
     try:
         with open(name_file, "r", encoding="utf-8") as file:
-            print()
+            text = file.read()
+            if not text.strip():
+                raise ValueError(f"Файл '{name_file}' пустой")
+
+            number_string = 1
             for string in file:
                 number_string += 1
 
         return number_string
 
     except FileNotFoundError:
-        return f"Файл: {name_file} не найден"
+        raise FileNotFoundError(f"Файл: '{name_file}' не найден")
 
 
 def write_file(number_string):
-    if number_string != 0:
-        with open("res.txt", "w", encoding="utf-8") as file:
-            file.write(str(number_string))
-            print("Число успешно записано в 'res.txt'")
-    else:
-        print("Файл пустой")
+    with open("res.txt", "w", encoding="utf-8") as file:
+        file.write(str(number_string))
+        return "Число строк успешно записано в 'res.txt'"
 
 
-write_file(read_file("файла_нет.txt"))
+write_file(read_file("teut.txt"))
 
 
 """
-1. В rex.txt появится имя файла файла_нет.txt. Винновата функция read.
-Которая вернула строку и функция write, которая записала это
-2. Т.к нам нужно записать именно число. Необходимо указать проверку
-что мы получили число, а не строку с символами
-3. Функция, которая общается с человеком
+1. Теперь обе функции возращают только 1 параметр
+1 функция возвращает число, 2 - текст с подтвержденим записи
+
+2. Тест кейсы:
+
+write_file(read_file("teut.txt")) - FileNotFound
+
+write_file(read_file("text.txt"))(пустой файл) - ValueError
+
+write_file(read_file("text.txt"))(файл только с пробелами) - ValueError
+
+write_file(read_file("text.txt"))(1 строка) - "Число строк успешно записано в 'res.txt'"
+
+3. Почистил отладочные print()
 """
