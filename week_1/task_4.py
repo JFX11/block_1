@@ -1,14 +1,9 @@
 def read_file(name_file):
 
     try:
-        with open(name_file, "r", encoding="utf-8") as file:
-            text = file.read()
-            if not text.strip():
-                raise ValueError(f"Файл '{name_file}' пустой")
-
-            number_string = 1
-            for string in file:
-                number_string += 1
+        for line in open(name_file, "r", encoding="itf-8"):
+            number_string = 0
+            number_string += 1
 
         return number_string
 
@@ -22,7 +17,7 @@ def write_file(number_string):
         return "Число строк успешно записано в 'res.txt'"
 
 
-write_file(read_file("teut.txt"))
+write_file(read_file("text.txt"))
 
 
 """
