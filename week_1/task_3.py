@@ -1,4 +1,4 @@
-def sort_by_dict_item(task):
+def sort_item(task):
     return task["date"]
 
 
@@ -30,7 +30,7 @@ def uncompleted_tasks(list_tasks):
     if not nums_dict:
         raise ValueError("Список не содержит задач")
 
-    sorted_result = sorted(list_uncompleted_tasks, key=sort_by_dict_item)
+    sorted_result = sorted(list_uncompleted_tasks, key=sort_item)
 
     if not sorted_result:
         sorted_result.append("Все задачи успешно выполнены")
@@ -65,6 +65,12 @@ def test_lambda(x):
 Изменил формат времени на формат YYYY-MM-DD - теперь сортировка должна работать корректно
 
 
+Я не до конца смог разобраться как именно нам сортировать даты, если он нам поступают в
+разных форматак. Поэтому мы будем требовать по ТЗ, чтобы формат даты был YYYY-MM-DD
+
+1. Сделал исключения, если в словере не словарь или пустой словарь.
+2. Мы будем считать, что у задачи 100% должен быть ключ 'name'
+3. sorted сравнивает строки, которые отображаются в формате YYYY-MM-DD
 
 
 Тест кейсы:
