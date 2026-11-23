@@ -7,10 +7,10 @@ def return_name(task):
 
 
 def check_required_key(item):
-    if not "name" in item:
-        raise ValueError("В задаче отсутсвует обязательный ключ name")
-    if not "status" in item:
-        raise ValueError("В задаче отсутсвует обязательный ключ status")
+    if "name" not in item:
+        raise ValueError("В задаче отсутствует обязательный ключ name")
+    if "status" not in item:
+        raise ValueError("В задаче отсутствует обязательный ключ status")
 
 
 def uncompleted_tasks(list_tasks):
@@ -69,7 +69,8 @@ def test_lambda(x):
 получить финальный ответ
 
 P.s если все задачи выолнены, возращается пустой список []
-
+Если передаваемая заадча содержит status и date с пустыми занчениями,
+то задача считается не выполненной и сортируется по имени после задач, которые с датой
 
 Тест кейсы:
 list_tasks = [] - ValueError: Список задач пустой
