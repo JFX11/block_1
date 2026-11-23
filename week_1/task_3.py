@@ -6,10 +6,10 @@ def return_name(task):
     return task["name"]
 
 
-def chack_required_key(item):
+def check_required_key(item):
     if not item.get("name"):
         raise ValueError("В задаче отсутсвует обязательный ключ name")
-    if not item.get("status"):
+    if not "status" in item:
         raise ValueError("В задаче отсутсвует обязательный ключ status")
 
 
@@ -25,7 +25,7 @@ def uncompleted_tasks(list_tasks):
     for item in list_tasks:
         if isinstance(item, dict):
             nums_dict += 1
-            chack_required_key(item)
+            check_required_key(item)
             if item.get("status") != "Выполнено" and item.get("date"):
                 list_uncompleted_tasks.append(item)
             elif item.get("status") != "Выполнено" and not item.get("date"):
@@ -119,5 +119,5 @@ list_tasks = [
 list_tasks = [
     {"name": "Синергет", "status": "В работе", "date": "2026-05-11"},
     {"name": "x", "status": "", "date": ""},
-] - Сейчас: ValueError: В задаче отсутсвует обязательный ключ status, пока не могу понять, как сделать
+] - [{'name': 'Синергет', 'status': 'В работе', 'date': '2026-05-11'}, {'name': 'x', 'status': '', 'date': ''}]
 """
