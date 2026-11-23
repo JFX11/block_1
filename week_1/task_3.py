@@ -1,19 +1,16 @@
-def dict_item(task):
+def return_date(task):
     return task["date"]
 
 
-def examination_dict(item):
-    if not item.get("status"):
-        print(
-            f"У задачи {item['name']} отсутсвует статус. Вставлено значение по умолчанию\n"
-        )
-        item["status"] = item.get("status", "Неизвестно")
+def return_name(task):
+    return task["name"]
 
-    if not item.get("date"):
-        print(
-            f"У задачи {item['name']} отсутсвует дата. Вставлено значение по умолчанию\n"
-        )
-        item["date"] = item.get("date", "Неизвестно")
+
+def chack_required_key(item):
+    if not item.get("name"):
+        raise ValueError("В задаче отсутсвует обязательный ключ name")
+    if not item.get("status"):
+        raise ValueError("В задаче отсутсвует обязательный ключ status")
 
 
 def uncompleted_tasks(list_tasks):
@@ -23,32 +20,32 @@ def uncompleted_tasks(list_tasks):
         raise ValueError("Список задач пустой")
 
     list_uncompleted_tasks = []
+    list_not_date_tasks = []
     nums_dict = 0
     for item in list_tasks:
         if isinstance(item, dict):
             nums_dict += 1
-            examination_dict(item)
-            if item.get("status") != "Выполнено":
+            chack_required_key(item)
+            if item.get("status") != "Выполнено" and item.get("date"):
                 list_uncompleted_tasks.append(item)
+            elif item.get("status") != "Выполнено" and not item.get("date"):
+                list_not_date_tasks.append(item)
 
     if not nums_dict:
         raise ValueError("Список не содержит задач")
 
-    sorted_result = sorted(list_uncompleted_tasks, key=dict_item)
+    sorted_list_with_date = sorted(list_uncompleted_tasks, key=return_date)
+    sorted_list_without_date = sorted(list_not_date_tasks, key=return_name)
 
-    return sorted_result
+    result_list = sorted_list_with_date + sorted_list_without_date
+
+    return result_list
 
 
 list_tasks = [
-    {"name": "Синергет", "status": "Выполнено", "date": "2026-05-11"},
-    {"name": "Муром", "status": "Выполнено", "date": "2026-05-15"},
-    {"name": "Али", "status": "Выполнено", "date": "2026-05-14"},
-    {
-        "name": "Али",
-        "status": "Выполнено",
-    },
+    {"name": "Синергет", "status": "В работе", "date": "2026-05-11"},
+    {"name": "x", "status": "", "date": ""},
 ]
-
 
 print(uncompleted_tasks(list_tasks))
 
@@ -75,16 +72,28 @@ P.s если все задачи выолнены, возращается пус
 
 Тест кейсы:
 list_tasks = [] - ValueError: Список задач пустой
+
+
 list_tasks = 5   - TypeError: Передаваемый объект не является списком
+
+
 list_tasks = [5]   - ValueError: Список не содержит задач
+
+
 list_tasks = [
-            {"name": "Синергет", "status": "В работе", "date": "2026-05-11"},
-            {"name": "Муром", "status": "Сделать", "date": "2026-05-15"},
-            [5],
-            ]   - [{'name': 'Синергет', 'status': 'В работе', 'date': '2026-05-11'}, 
-                    {'name': 'Муром', 'status': 'Сделать', 'date': '2026-05-15'}]
-list_tasks = [{}] - ValueError: Задача пустая
+    {"name": "Синергет", "status": "В работе", "date": "2026-05-11"},
+    {"name": "Муром", "status": "Сделать", "date": "2026-05-15"},
+    [5],
+] - [{'name': 'Синергет', 'status': 'В работе', 'date': '2026-05-11'}, 
+    {'name': 'Муром', 'status': 'Сделать', 'date': '2026-05-15'}]
+
+
+list_tasks = [{}] - ValueError: В задаче отсутсвует обязательный ключ name
+
+
 list_tasks = [{1}] - ValueError: Список не содержит задач
+
+
 list_tasks = [
     {"name": "Синергет", "status": "В работе", "date": "2026-05-11"},
     {"name": "Муром", "status": "Сделать", "date": "2026-05-15"},
@@ -93,10 +102,9 @@ list_tasks = [
         "name": "Али",
         "status": "В работе",
     },
-] - [{'name': 'Синергет', 'status': 'В работе', 'date': '2026-05-11'}, 
-    {'name': 'Муром', 'status': 'Сделать', 'date': '2026-05-15'}, {'name': 'Али', 'status': 'В работе', 'date': 'Даты нет'}, 
-    {'name': 'Али', 'status': 'Статуса нет', 'date': 'Даты нет'}]
+] - [{'name': 'Синергет', 'status': 'В работе', 'date': '2026-05-11'}, {'name': 'Муром', 'status': 'Сделать', 'date': '2026-05-15'}, {'name': 'Али', 'status': 'В работе'}]
 
+    
 list_tasks = [
     {"name": "Синергет", "status": "Выполнено", "date": "2026-05-11"},
     {"name": "Муром", "status": "Выполнено", "date": "2026-05-15"},
@@ -106,4 +114,10 @@ list_tasks = [
         "status": "Выполнено",
     },
 ] - []
+
+
+list_tasks = [
+    {"name": "Синергет", "status": "В работе", "date": "2026-05-11"},
+    {"name": "x", "status": "", "date": ""},
+] - Сейчас: ValueError: В задаче отсутсвует обязательный ключ status, пока не могу понять, как сделать
 """
