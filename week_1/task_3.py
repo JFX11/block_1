@@ -4,6 +4,12 @@ def sort_task_date(task):
     task["date"] = None
     return task["date"]
 
+def examination_dict(item):
+    if isinstance(item, dict):
+        if item.get('status'):
+            
+    
+    return False
 
 def uncompleted_tasks(list_tasks):
     if not isinstance(list_tasks, list):
@@ -11,6 +17,11 @@ def uncompleted_tasks(list_tasks):
     if not list_tasks:
         raise ValueError("Список задач пустой")
 
+    list_uncompleted_tasks = []
+    for item in list_tasks:
+        if isinstance(item, dict):
+            list_uncompleted_tasks.append(item)
+            
     list_uncompleted_tasks = [
         task
         for task in list_tasks
@@ -33,7 +44,7 @@ list_tasks = [
 ]
 
 
-print(uncompleted_tasks(list_tasks))
+print(uncompleted_tasks([5]))
 
 
 """
