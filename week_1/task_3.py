@@ -1,15 +1,19 @@
-def sort_item(task):
+def dict_item(task):
     return task["date"]
 
 
 def examination_dict(item):
-    if not item.get("name"):
-        raise ValueError("Задача пустая")
+    if not item.get("status"):
+        print(
+            f"У задачи {item['name']} отсутсвует статус. Вставлено значение по умолчанию\n"
+        )
+        item["status"] = item.get("status", "Неизвестно")
 
-    if not item.get("status") or not item.get("date"):
-        item["status"] = item.get("status", "Статуса нет")
-        item["date"] = item.get("date", "Даты нет")
-        return item
+    if not item.get("date"):
+        print(
+            f"У задачи {item['name']} отсутсвует дата. Вставлено значение по умолчанию\n"
+        )
+        item["date"] = item.get("date", "Неизвестно")
 
 
 def uncompleted_tasks(list_tasks):
@@ -30,25 +34,18 @@ def uncompleted_tasks(list_tasks):
     if not nums_dict:
         raise ValueError("Список не содержит задач")
 
-    sorted_result = sorted(list_uncompleted_tasks, key=sort_item)
-
-    if not sorted_result:
-        sorted_result.append("Все задачи успешно выполнены")
-        return sorted_result
+    sorted_result = sorted(list_uncompleted_tasks, key=dict_item)
 
     return sorted_result
 
 
 list_tasks = [
-    {"name": "Синергет", "status": "В работе", "date": "2026-05-11"},
-    {"name": "Муром", "status": "Сделать", "date": "2026-05-15"},
+    {"name": "Синергет", "status": "Выполнено", "date": "2026-05-11"},
+    {"name": "Муром", "status": "Выполнено", "date": "2026-05-15"},
     {"name": "Али", "status": "Выполнено", "date": "2026-05-14"},
     {
         "name": "Али",
-        "status": "В работе",
-    },
-    {
-        "name": "Али",
+        "status": "Выполнено",
     },
 ]
 
@@ -72,8 +69,12 @@ def test_lambda(x):
 2. Мы будем считать, что у задачи 100% должен быть ключ 'name'
 3. sorted сравнивает строки, которые отображаются в формате YYYY-MM-DD
 
+P.s если все задачи выолнены, возращается пустой список []
+Так-же добавил print, если в задачи отсутсвует ключ, чтобы информировать пользователя
+что у вставилось значение по умолчанию
 
 Тест кейсы:
+list_tasks = [] - ValueError: Список задач пустой
 list_tasks = 5   - TypeError: Передаваемый объект не является списком
 list_tasks = [5]   - ValueError: Список не содержит задач
 list_tasks = [
@@ -95,4 +96,14 @@ list_tasks = [
 ] - [{'name': 'Синергет', 'status': 'В работе', 'date': '2026-05-11'}, 
     {'name': 'Муром', 'status': 'Сделать', 'date': '2026-05-15'}, {'name': 'Али', 'status': 'В работе', 'date': 'Даты нет'}, 
     {'name': 'Али', 'status': 'Статуса нет', 'date': 'Даты нет'}]
+
+list_tasks = [
+    {"name": "Синергет", "status": "Выполнено", "date": "2026-05-11"},
+    {"name": "Муром", "status": "Выполнено", "date": "2026-05-15"},
+    {"name": "Али", "status": "Выполнено", "date": "2026-05-14"},
+    {
+        "name": "Али",
+        "status": "Выполнено",
+    },
+] - []
 """
