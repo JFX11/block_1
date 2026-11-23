@@ -1,14 +1,27 @@
 def read_file(name_file):
 
     try:
-        for line in open(name_file, "r", encoding="itf-8"):
+        with open(name_file, "r", encoding="utf-8") as file:
+            #if not file.read():
+                #raise ValueError("Файл пустой")
+            
+            
+            print(file.tell())
+            text = file.read()
+            print(file.tell())
+            print(list(file))
+            
+            
+            
+            
             number_string = 0
-            number_string += 1
-
+            for line in file:
+                number_string += 1
+                
         return number_string
 
     except FileNotFoundError:
-        raise FileNotFoundError(f"Файл: '{name_file}' не найден")
+        raise FileNotFoundError()
 
 
 def write_file(number_string):
