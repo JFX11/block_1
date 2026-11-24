@@ -3,8 +3,8 @@ def read_file(name_file):
     try:
         with open(name_file, "r", encoding="utf-8") as file:
 
-            #if not file.read():
-             #   raise ValueError(f"Файл {name_file} пустой")
+            if not file.read():
+                raise ValueError(f"Файл {name_file} пустой")
             
             file.seek(0)
             number_lines = 0
@@ -38,16 +38,13 @@ write_file(read_file("text.txt"))
 
 Строка это набор букв, слов. В нашем примере это еще знак `\n`, перевод на новую стрроку
 Пустой файл. Это файл, который полностью пустой, в нем нет ничего
+Добавил проверку в функцию записи, на число
 
 2. Тест кейсы:
 
-write_file(read_file("teut.txt"))
-
-write_file(read_file("text.txt"))(пустой файл)
-
-write_file(read_file("text.txt"))(файл только с пробелами)
-
-write_file(read_file("text.txt"))(1 строка)
-write_file(read_file("text.txt"))(3 строки)
-write_file(read_file("text.txt"))(10 строк)
+a\nb\nc\n - в файл записано 3
+привет\nмир\nкот\n - в файл записано 3
+пустой файл - ValueError: Файл text.txt пустой
+x - вернул 1
+\n\n\n - вернул 3
 """
