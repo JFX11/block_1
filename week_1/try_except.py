@@ -11,3 +11,7 @@ except ZeroDivisionError:
 2 / 0, появится исключение и мы перейдем в  блок exept
 
 """
+
+
+t = '123123\ndsdfss\n'
+print(t.count('\n'))
