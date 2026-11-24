@@ -1,6 +1,5 @@
 def read_file(name_file):
 
-    try:
         with open(name_file, "r", encoding="utf-8") as file:
 
             if not file.read():
@@ -9,24 +8,24 @@ def read_file(name_file):
             file.seek(0)
             number_lines = 0
             for line in file:
-                print(line)
                 number_lines += 1
             
             
         return number_lines
-
-    except FileNotFoundError:
-        raise FileNotFoundError(f"Файл {name_file} не найден!")
+      
 
 
 def write_file(number_string):
-    if isinstance(number_string, (int, float)):
-        with open("res.txt", "w", encoding="utf-8") as file:
-            file.write(str(number_string))
+    if not type(number_string) == int:
+        raise TypeError('Запись прервалась. т.к аргумент не является числом')
+    
+    with open("res.txt", "w", encoding="utf-8") as file:
+        file.write(str(number_string))
+            
     
 
 
-write_file(read_file("text.txt"))
+write_file(read_file('text.txt'))
 
 """
 Эксперимет с seek поазал:
@@ -39,12 +38,14 @@ write_file(read_file("text.txt"))
 Строка это набор букв, слов. В нашем примере это еще знак `\n`, перевод на новую стрроку
 Пустой файл. Это файл, который полностью пустой, в нем нет ничего
 Добавил проверку в функцию записи, на число
+Убрал перехват отсутсвия файла, заменил ValueError, если мы передаем не наименование файла
 
 2. Тест кейсы:
 
-a\nb\nc\n - в файл записано 3
-привет\nмир\nкот\n - в файл записано 3
-пустой файл - ValueError: Файл text.txt пустой
-x - вернул 1
-\n\n\n - вернул 3
+write_file(read_file(1)) - ValueError: Передаваемый аргемент не является наименованием файла
+write_file(read_file(text.txt))(файл пустой) - ValueError: Файл text.txt пустой
+write_file(read_file(text.txt))(a\n\nb\n) - в файл записано 3
+write_file(read_file(text.txt))(пробел) - в файл записано 1
+write_file(read_file(text.txt))(привет без \n) - в файл записано 1
+write_file(read_file(text.txt))(10 строк) - в файл записано 10 строк
 """
