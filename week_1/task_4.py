@@ -1,15 +1,15 @@
 def read_file(name_file):
-        with open(name_file, "r", encoding="utf-8") as file:
+    with open(name_file, "r", encoding="utf-8") as file:
 
-            if not file.read():
-                raise ValueError(f"Файл {name_file} пустой")
+        if not file.read():
+            raise ValueError(f"Файл {name_file} пустой")
             
-            file.seek(0)
-            number_lines = 0
-            for line in file:
-                number_lines += 1
+        file.seek(0)
+        number_lines = 0
+        for line in file:
+            number_lines += 1
   
-        return number_lines
+    return number_lines
       
 
 
@@ -23,10 +23,10 @@ def write_file(number_string):
     
 
 
-write_file(read_file('texа.txt'))
+write_file(read_file('text.txt'))
 
 """
-Эксперемент с seek показал:
+Эксперимент с seek показал:
  1
  \nb\nc\n
  0
@@ -47,4 +47,6 @@ write_file(read_file('text.txt'))(привет без \n) - в файл запи
 write_file(read_file('text.txt'))(10 строк) - в файл записано 10 строк
 write_file(read_file('text.txt'))(\n\n\n) - в файл записано 3
 write_file(read_file('texа.txt')) - FileNotFoundError: [Errno 2] No such file or directory: 'texа.txt'
+write_file(read_file('text.txt'))('х') - в файл записано 1
+write_file(read_file('text.txt'))(a\nb\nc") - в файл записано 3
 """
