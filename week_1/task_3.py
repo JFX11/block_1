@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 def check_required_key(item):
     if "name" not in item:
         raise ValueError("В задаче отсутствует обязательный ключ name")
@@ -12,63 +13,67 @@ def check_from_dict(list_tasks):
         raise TypeError("Передаваемый объект не является списком")
     if not list_tasks:
         raise ValueError("Список задач пустой")
-    
-    
-def validate_date(date):
+
+
+def validate_date(object):
     try:
-        valid_date = str(datetime.strptime(date, "%d.%m.%Y"))
+        valid_date = str(datetime.strptime(object["date"], "%d.%m.%Y"))
         return valid_date[0:10]
     except ValueError:
         try:
-            valid_date_1 = str(datetime.strptime(date, "%Y.%m.%d"))
+            valid_date_1 = str(datetime.strptime(object["date"], "%Y.%m.%d"))
             return valid_date_1[0:10]
         except ValueError:
             try:
-                valid_date_2 = str(datetime.strptime(date, "%Y-%m-%d"))
+                valid_date_2 = str(datetime.strptime(object["date"], "%Y-%m-%d"))
                 return valid_date_2[0:10]
             except ValueError:
                 try:
-                    valid_date_3 = str(datetime.strptime(date, "%d-%m-%Y"))
+                    valid_date_3 = str(datetime.strptime(object["date"], "%d-%m-%Y"))
                     return valid_date_3[0:10]
                 except ValueError:
-                       try:
-                           valid_date_4 = str(datetime.strptime(date, "%d:%m:%Y"))
-                           return valid_date_4[0:10]
-                       except ValueError:
-                           try:
-                                valid_date_5 = str(datetime.strptime(date, "%d:%m:%Y"))
-                                return valid_date_5[0:10]
-                           except ValueError:
-                               return 0
-                
-                
+                    try:
+                        valid_date_4 = str(
+                            datetime.strptime(object["date"], "%d:%m:%Y")
+                        )
+                        return valid_date_4[0:10]
+                    except ValueError:
+                        try:
+                            valid_date_5 = str(
+                                datetime.strptime(object["date"], "%d:%m:%Y")
+                            )
+                            return valid_date_5[0:10]
+                        except ValueError:
+                            return 0
+
+
 def check_date(item):
-    if 'date' not in item:
+    if "date" not in item:
         return False
-    
-    correct_date = item.get('date').replace('.', '').replace('-', '').replace(':', '')
-    
+
+    correct_date = item.get("date").replace(".", "").replace("-", "").replace(":", "")
+
     if correct_date.isdigit():
         return True
     return False
-                
-            
+
+
 def uncompleted_tasks(list_tasks):
-    
+
     check_from_dict(list_tasks)
 
     list_uncompleted_tasks = []
     list_not_date_tasks = []
     list_not_date_not_status = []
     nums_dict = 0
-    
+
     for item in list_tasks:
         if isinstance(item, dict):
             nums_dict += 1
             check_required_key(item)
             if item.get("status") != "Выполнено" and check_date(item):
                 list_uncompleted_tasks.append(item)
-            elif item.get("status") == '':
+            elif item.get("status") == "":
                 list_not_date_not_status.append(item)
             else:
                 list_not_date_tasks.append(item)
@@ -76,16 +81,21 @@ def uncompleted_tasks(list_tasks):
     if not nums_dict:
         raise ValueError("Список не содержит задач")
 
-    sorted_list_with_date = sorted(list_uncompleted_tasks, key=lambda date: validate_date)
-    sorted_list_without_date = sorted(list_not_date_tasks, key=lambda status: status['status'])
-    sorted_list_name = sorted(list_not_date_not_status, key=lambda name: name['name'])
+    sorted_list_with_date = sorted(list_uncompleted_tasks, key=validate_date)
+    sorted_list_without_date = sorted(
+        list_not_date_tasks, key=lambda status: status["status"]
+    )
+    sorted_list_name = sorted(list_not_date_not_status, key=lambda name: name["name"])
 
     result_list = sorted_list_with_date + sorted_list_without_date + sorted_list_name
 
     return result_list
 
 
-list_tasks = [{"name":"Синергет","status":"В работе","date":"2026-05-11"},]
+list_tasks = [
+    {"name": "Синергет", "status": "В работе", "date": "2026-05-11"},
+    {"name": "Али", "status": "В работе", "date": "12.05.2026"},
+]
 
 print(uncompleted_tasks(list_tasks))
 
