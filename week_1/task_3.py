@@ -1,3 +1,6 @@
+from datetime import datetime as dt
+
+
 def return_date(task):
     return task["date"]
 
@@ -27,6 +30,7 @@ def uncompleted_tasks(list_tasks):
             nums_dict += 1
             check_required_key(item)
             if item.get("status") != "Выполнено" and item.get("date"):
+                item["date"] = dt.strptime(item["date"], "%d.%m.%Y")
                 list_uncompleted_tasks.append(item)
             elif item.get("status") != "Выполнено" and not item.get("date"):
                 list_not_date_tasks.append(item)
@@ -44,7 +48,8 @@ def uncompleted_tasks(list_tasks):
 
 list_tasks = [
     {"name": "Синергет", "status": "В работе", "date": "2026-05-11"},
-    {"name": "x", "status": "", "date": ""},
+    {"name": "Муром", "status": "Сделать", "date": "2026-05-15"},
+    [5],
 ]
 
 print(uncompleted_tasks(list_tasks))

@@ -1,17 +1,9 @@
-try:
-    print("Let's divide some numbers")
-    s = 2 / 0
-    print("Cool!")
-except ZeroDivisionError:
-    print("You can't divide by zero")
+from datetime import datetime
 
+list_tasks = [
+    {"name": "Синергет", "status": "В работе", "date": "2026-05-11"},
+    {"name": "Муром", "status": "Сделать", "date": "15.05.2026"},
+]
 
-"""
-В данном примере, первый print() сработает, но когда произойдет 
-2 / 0, появится исключение и мы перейдем в  блок exept
-
-"""
-
-
-t = '123123\ndsdfss\n'
-print(t.count('\n'))
+valid_date = str(datetime.strptime(list_tasks[1]["date"], "%d.%m.%Y"))
+print(valid_date)
