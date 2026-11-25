@@ -59,6 +59,7 @@ def uncompleted_tasks(list_tasks):
 
     list_uncompleted_tasks = []
     list_not_date_tasks = []
+    list_not_date_not_status = []
     nums_dict = 0
     
     for item in list_tasks:
@@ -67,26 +68,24 @@ def uncompleted_tasks(list_tasks):
             check_required_key(item)
             if item.get("status") != "Выполнено" and check_date(item):
                 list_uncompleted_tasks.append(item)
+            elif item.get("status") == '':
+                list_not_date_not_status.append(item)
             else:
                 list_not_date_tasks.append(item)
 
     if not nums_dict:
         raise ValueError("Список не содержит задач")
 
-    sorted_list_with_date = sorted(list_uncompleted_tasks, validate_date)
-    sorted_list_without_date = sorted(list_not_date_tasks, key=lambda status: item['status'])
+    sorted_list_with_date = sorted(list_uncompleted_tasks, key=lambda date: validate_date)
+    sorted_list_without_date = sorted(list_not_date_tasks, key=lambda status: status['status'])
+    sorted_list_name = sorted(list_not_date_not_status, key=lambda name: name['name'])
 
-    result_list = sorted_list_with_date + sorted_list_without_date
+    result_list = sorted_list_with_date + sorted_list_without_date + sorted_list_name
 
     return result_list
 
 
-list_tasks = [
-    {"name": "Синергет", "status": "В работе", "date": "2026ds-05-11"},
-    {"name": "Муром", "status": "Сделать", "date": "15.05.2026"},
-    {"name": "Муром", "status": "Сделать", "date": "dfdfd"},
-    [5],
-]
+list_tasks = [{"name":"Синергет","status":"В работе","date":"2026-05-11"},]
 
 print(uncompleted_tasks(list_tasks))
 
@@ -100,8 +99,9 @@ def test_lambda(x):
 Изменил формат времени на формат YYYY-MM-DD - теперь сортировка должна работать корректно
 
 
-Я не до конца смог разобраться как именно нам сортировать даты, если он нам поступают в
-разных форматак. Поэтому мы будем требовать по ТЗ, чтобы формат даты был YYYY-MM-DD
+Узнал что есть библитоека datetime и применил её для проверки правильности формата времени,
+теперь если мы написали dd-mm-yyyy или dd.mm.yyyy, мы с помощью функции делаем корректный формат и сортируем по
+этому параметру
 
 1. Сделал исключения, если в словаре не словарь или пустой словарь.
 2. Мы будем считать, что у задачи 100% должен быть ключ 'name' и status
@@ -110,8 +110,8 @@ def test_lambda(x):
 получить финальный ответ
 
 P.s если все задачи выолнены, возращается пустой список []
-Если передаваемая заадча содержит status и date с пустыми занчениями,
-то задача считается не выполненной и сортируется по имени после задач, которые с датой
+Если передаваемая задча содержит status и date с пустыми занчениями,
+то задача считается не выполненной и сортируется по имени после задач, которые с датой.
 
 Тест кейсы:
 list_tasks = [] - ValueError: Список задач пустой
