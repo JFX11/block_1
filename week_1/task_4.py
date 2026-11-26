@@ -1,4 +1,11 @@
-def lines_number(file_name):
+'''
+Функция read_lines() - открывает файл и считает с помощью цикла for кол-во строк файлов.
+Элемент file считается этерируемым объектом, поэтому мы можем использовать это что-бы посчитать
+кол-во строк в файле.
+'''
+
+def count_lines(file_name):
+    '''Функция подсчета строк из файла'''
     with open(file_name, "r", encoding="utf-8") as file:
 
         count_lines = 0
@@ -6,34 +13,33 @@ def lines_number(file_name):
             count_lines += 1
   
     return count_lines
+
+'''
+Тест-кейсы
+
+Пустой файл - 0
+Файла нет - FileNotFoundError
+' ' - 1
+'x\n\n' - 2
+\n\n\n - 3
+10 строк 'как дела?' - 10
+'''
       
 
 def write_count_lines(file_name, count_lines):
     if type(count_lines) is not int:
         raise TypeError('Запись прервалась. Аргумент не является целым числом')
     if count_lines < 0:
-        raise ValueError('Запись прервалась. Передаваемый аргумент должен быть положительным числом')
+        raise ValueError('Запись прервалась. Передаваемый аргумент должен быть неотрицательным числом')
     
     with open(file_name, "w", encoding="utf-8") as file:
         file.write(str(count_lines))
             
-write_count_lines('res.txt', lines_number('text.txt'))
 
-"""
-Строка это набор букв, слов. В нашем примере это еще знак `\n`, перевод на новую строку
-Пустой файл. Это файл, который полностью пустой, в нем нет ничего - возвращает 0
-Если файла на чтения нет - то ошибка FileNotFoundError
+'''
+Тест кейсы:
+'тест' - TypeError('Запись прервалась. Аргумент не является целым числом')
+-5 - ValueError('Запись прервалась. Передаваемый аргумент должен быть неотрицательным числом')
+5 - в файл записано число 5
+'''
 
-2. Тест кейсы:
-
-write_file(read_file('text.txt'))(файл пустой) - ValueError: Файл text.txt пустой
-write_file(read_file('text.txt'))(a\n\nb\n) - в файл записано 3
-write_file(read_file('text.txt'))(пробел) - в файл записано 1
-write_file(read_file('text.txt'))(привет без \n) - в файл записано 1
-write_file(read_file('text.txt'))(10 строк) - в файл записано 10 строк
-write_file(read_file('text.txt'))(\n\n\n) - в файл записано 3
-write_file(read_file('texа.txt')) - FileNotFoundError: [Errno 2] No such file or directory: 'texа.txt'
-write_file(read_file('text.txt'))('х') - в файл записано 1
-write_file(read_file('text.txt'))(a\nb\nc") - в файл записано 3
-
-"""
