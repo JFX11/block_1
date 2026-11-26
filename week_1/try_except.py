@@ -1,5 +1,5 @@
 from datetime import datetime
-
+import string
 def validate_date(dict_item):
     try:
         valid_date = str(datetime.strptime(dict_item['date'], "%d.%m.%Y"))
@@ -43,3 +43,10 @@ for item in list_tasks:
 t = '2026.05.11'
 correct_date = t.replace('.', '').replace('-', '').replace(':', '')
 print(correct_date)
+
+filtered_word = 'кот'
+s = all(ord(symbol) <= 1105 for symbol in filtered_word)
+print(s)
+
+for i in 'я':
+    print(ord('ё'))
