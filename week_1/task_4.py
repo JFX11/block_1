@@ -67,7 +67,7 @@ def write_count_lines(file_name, number_lines):
         file.write(number_lines_str)
 
 
-write_count_lines("res.txt", count_lines(1))
+write_count_lines("res.txt", count_lines("text.txt"))
 
 
 #  number_lines = 'тест' - TypeError: Запись прервалась. Передаваемый аргумент 'тест' не является целым числом
