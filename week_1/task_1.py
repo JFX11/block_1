@@ -19,7 +19,6 @@ def sum_numbers(list_numbers):
         
     return sum_even_numbers
 
-print(sum_numbers([True, False, 2, '100', '2.8']))
 
 """
 Новые правки:
